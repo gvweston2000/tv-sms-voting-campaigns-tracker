@@ -1,0 +1,2 @@
+class Validity < ApplicationRecord
+end
