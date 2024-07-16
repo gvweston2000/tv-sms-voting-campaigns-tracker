@@ -1,0 +1,22 @@
+<h1>
+    Campaign <%= @campaign.episode %>
+</h1>
+
+<table>
+    <thead>
+        <th>Name</th>
+        <th>Total Score</th>
+    </thead>
+    <tbody>
+        <% @campaign.candidates.each do |campaign_candidate| %>
+            <tr>
+                <td> 
+                    <%= campaign_candidate.name %>
+                </td>
+                <td> 
+                    <%= campaign_candidate.votes.count %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
