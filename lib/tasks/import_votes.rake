@@ -5,16 +5,22 @@ task(import_votes: [:environment]) do
   votes_path = Rails.root.join('lib', 'assets', 'votes.txt')
   open_votes = File.open(votes_path)
   votes_rows = open_votes.readlines
+  votes = 0
 
   invalid_votes_path = Rails.root.join('lib', 'assets', 'invalid_votes.csv')
   File.write(invalid_votes_path, "Time,Campaign,Validiity,Choice \n")
+  invalid_votes = 0
 
   valid_votes_path = Rails.root.join('lib', 'assets', 'valid_votes.csv')
   File.write(valid_votes_path, "Time,Campaign,Validiity,Choice \n")
+  valid_votes = 0
+
+  print("START - processing votes. \n")
 
   votes_rows.each do |vote_row|
-    selected_data = vote_row.force_encoding("iso-8859-1").split.values_at(1, 2, 3, 4)
+    votes += 1
 
+    selected_data = vote_row.force_encoding("iso-8859-1").split.values_at(1, 2, 3, 4)
     selected_data_extracted_values = selected_data[1..-1].map { |e| e.delete(' ').split(':')[1] }
 
     vote_time = selected_data[0]
@@ -28,9 +34,11 @@ task(import_votes: [:environment]) do
     valid_candidate = choice_candidate.present? && choice_candidate.count("a-zA-Z") > 0
 
     unless (valid_time || valid_episode || valid_measure || valid_candidate)
+      invalid_votes += 1
       File.open(invalid_votes_path, "a") { |file| file.write("#{vote_time},#{campaign_episode},#{validity_measure},#{choice_candidate} \n") }
       next
     else
+      valid_votes += 1
       File.open(valid_votes_path, "a") { |file| file.write("#{vote_time},#{campaign_episode},#{validity_measure},#{choice_candidate} \n") }
     end
 
@@ -59,6 +67,11 @@ task(import_votes: [:environment]) do
         external_identifier: vote_time,
         validity: validity
       )
-    
   end
+
+  print("END - processing votes. \n")
+
+  print("#{votes} votes were processed. \n")
+  print("#{invalid_votes} votes were not imported because they were invalid: \n #{invalid_votes_path} \n")
+  print("#{valid_votes} votes were imported because they were valid: \n #{valid_votes_path} \n")
 end
