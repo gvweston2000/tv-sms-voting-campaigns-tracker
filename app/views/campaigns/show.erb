@@ -5,7 +5,8 @@
 <table>
     <thead>
         <th>Name</th>
-        <th>Total Score</th>
+        <th>Total Votes Pre or Post</th>
+        <th>Total Votes During</th>
     </thead>
     <tbody>
         <% @campaign.candidates.each do |campaign_candidate| %>
@@ -13,8 +14,10 @@
                 <td> 
                     <%= campaign_candidate.name %>
                 </td>
+                <td>
+                    <%= campaign_candidate.votes.count { |vote| vote if vote.validity.pre_measure? } %>
                 <td> 
-                    <%= campaign_candidate.votes.count %>
+                    <%= campaign_candidate.votes.count { |vote| vote if vote.validity.during_measure? } %>
                 </td>
             </tr>
         <% end %>
