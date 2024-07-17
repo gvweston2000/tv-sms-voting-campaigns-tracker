@@ -24,7 +24,25 @@ This TECH SPEC documents design decisions and reasoning.
 
     * Providing meta data plus backlinks and keywords would be realistic.
 
-5. More TBD but these are items that I am aware of.
+6. Rspec tests.
+
+    * Add test cases.
+
+        * Controller request spec for data presence and permitted params.
+
+        * Views spec for loading and styles (if classes were provided).
+
+        * Models associations and validations specs.
+
+        * `rake` task unit spec for outputs and queries.
+
+    * Ideally would be provided during Test Driven Development but not included for time crunch with this project delivery.
+
+7. Rubocop.
+
+    * Gem installed with ongoing corrections.
+
+8. More TBD but these are items that I am aware of.
 
 ## Controller
 
