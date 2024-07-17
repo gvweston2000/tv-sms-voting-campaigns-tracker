@@ -1,15 +1,17 @@
 class Validity < ApplicationRecord
     has_many :votes
 
+    validates :measure, presence: true, uniqueness: true
+
     def pre_measure?
-        measure == 'pre'
+        measure == 'Pre'
     end
 
     def during_measure?
-        measure == 'during'
+        measure == 'During'
     end
 
     def post_measure?
-        measure == 'post'
+        measure == 'Post'
     end
 end
