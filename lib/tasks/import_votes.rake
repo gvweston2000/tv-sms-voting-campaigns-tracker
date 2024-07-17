@@ -8,11 +8,11 @@ task(import_votes: [:environment]) do
   votes = 0
 
   valid_votes_path = Rails.root.join('lib', 'assets', 'valid_votes.csv')
-  File.write(valid_votes_path, "Time,Campaign,Validiity,Choice \n")
+  File.write(valid_votes_path, "Time,Campaign,Validity,Choice \n")
   valid_votes = 0
 
   invalid_votes_path = Rails.root.join('lib', 'assets', 'invalid_votes.csv')
-  File.write(invalid_votes_path, "Time,Campaign,Validiity,Choice,Error \n")
+  File.write(invalid_votes_path, "Time,Campaign,Validity,Choice,Error \n")
   invalid_votes = 0
 
   print("START - processing votes. \n")
