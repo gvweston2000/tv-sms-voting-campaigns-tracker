@@ -10,13 +10,25 @@
         <th>Action</th>
     </thead>
     <tbody>
-        <% @campaigns.each do |campaign| %>
+        <% if @campaigns.any? %>
+            <% @campaigns.each do |campaign| %>
+                <tr>
+                    <td> 
+                        <%= campaign.episode %>
+                    </td>
+                    <td> 
+                        <%= link_to 'View', campaign_path(campaign) %>
+                    </td>
+                </tr>
+            <% end %>
+        <% else %>
             <tr>
-                <td> 
-                    <%= campaign.episode %>
+                <td>
+                    Episodes do not exist.
                 </td>
-                <td> 
-                    <%= link_to 'View', campaign_path(campaign) %>
+
+                <td>
+                    Have you imported Vote data?
                 </td>
             </tr>
         <% end %>

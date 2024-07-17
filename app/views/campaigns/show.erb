@@ -9,15 +9,29 @@
         <th>Total Votes During</th>
     </thead>
     <tbody>
-        <% @campaign.candidates.each do |campaign_candidate| %>
+        <% if @campaign.candidates.present? %>
+            <% @campaign.candidates.each do |campaign_candidate| %>
+                <tr>
+                    <td> 
+                        <%= campaign_candidate.name %>
+                    </td>
+                    <td>
+                        <%= campaign_candidate.votes.count { |vote| vote if (vote.validity.pre_measure? || vote.validity.post_measure?) } %>
+                    <td> 
+                        <%= campaign_candidate.votes.count { |vote| vote if vote.validity.during_measure? } %>
+                    </td>
+                </tr>
+            <% end %>
+        <% else %>
             <tr>
-                <td> 
-                    <%= campaign_candidate.name %>
+                <td>
+                   Candidates do not exist.
                 </td>
                 <td>
-                    <%= campaign_candidate.votes.count { |vote| vote if vote.validity.pre_measure? } %>
-                <td> 
-                    <%= campaign_candidate.votes.count { |vote| vote if vote.validity.during_measure? } %>
+                   Not available.
+                </td>
+                <td>
+                   Not available.
                 </td>
             </tr>
         <% end %>
